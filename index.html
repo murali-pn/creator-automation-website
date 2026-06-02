@@ -5,394 +5,139 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pocketnori — Instagram Automation for Creators</title>
   <meta name="description" content="Pocketnori automates your Instagram DMs, comment replies, and lead capture so you can focus on creating." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --purple:       #5B21B6;
-      --purple-dark:  #4C1D95;
-      --purple-light: #EDE9FE;
-      --grey-bg:      #F9FAFB;
-      --text:         #111827;
-      --text-muted:   #6B7280;
-      --border:       #E5E7EB;
-      --white:        #FFFFFF;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      background: var(--white);
-      line-height: 1.6;
-    }
-
-    /* ── UTILITIES ── */
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .btn {
-      display: inline-block;
-      padding: 0.625rem 1.5rem;
-      border-radius: 8px;
-      font-size: 0.9375rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-      border: none;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-primary         { background: var(--purple); color: var(--white); }
-    .btn-primary:hover   { background: var(--purple-dark); }
-    .btn-white           { background: var(--white); color: var(--purple); }
-    .btn-white:hover     { background: var(--purple-light); }
-    .btn-lg              { padding: 0.875rem 2.25rem; font-size: 1rem; }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 0 5%;
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--purple);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-
-    /* ── SECTIONS ── */
-    section { padding: 88px 5%; }
-
-    h1 {
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      font-weight: 800;
-      line-height: 1.12;
-      letter-spacing: -0.025em;
-    }
-    h2 {
-      font-size: clamp(1.75rem, 3.5vw, 2.375rem);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.015em;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      background: var(--white);
-      text-align: center;
-      padding-top: 108px;
-      padding-bottom: 108px;
-    }
-    .hero h1 { max-width: 680px; margin: 0 auto 24px; }
-    .hero p {
-      font-size: 1.125rem;
-      color: var(--text-muted);
-      max-width: 500px;
-      margin: 0 auto 40px;
-    }
-
-    /* ── HOW IT WORKS ── */
-    .how-it-works { background: var(--grey-bg); }
-    .how-it-works h2 { text-align: center; margin-bottom: 56px; }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-    }
-    .step { text-align: center; }
-    .step-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: var(--purple);
-      color: var(--white);
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    .step h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 8px; }
-    .step p  { font-size: 0.9375rem; color: var(--text-muted); }
-
-    /* ── FEATURES ── */
-    .features { background: var(--white); }
-    .features h2 { text-align: center; margin-bottom: 56px; }
-
-    .feature-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .card {
-      background: var(--grey-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 32px 28px;
-    }
-    .card-icon { font-size: 2rem; margin-bottom: 18px; }
-    .card h3   { font-size: 1.0625rem; font-weight: 600; margin-bottom: 10px; }
-    .card p    { font-size: 0.9375rem; color: var(--text-muted); line-height: 1.65; }
-
-    /* ── PRICING ── */
-    .pricing { background: var(--grey-bg); }
-    .pricing h2 { text-align: center; margin-bottom: 12px; }
-    .pricing-sub { text-align: center; color: var(--text-muted); margin-bottom: 56px; font-size: 1.0625rem; }
-
-    .pricing-cards {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .pricing-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 40px 36px;
-      width: 320px;
-      position: relative;
-    }
-    .pricing-card.featured { border: 2px solid var(--purple); }
-
-    .badge {
-      position: absolute;
-      top: -15px;
-      right: 28px;
-      background: var(--purple);
-      color: var(--white);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      padding: 5px 14px;
-      border-radius: 20px;
-    }
-    .plan-name {
-      font-size: 0.8125rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-    .price {
-      font-size: 2.75rem;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.03em;
-      line-height: 1;
-    }
-    .price span { font-size: 1rem; font-weight: 500; color: var(--text-muted); }
-
-    .pricing-features {
-      list-style: none;
-      margin: 28px 0 36px;
-    }
-    .pricing-features li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.9375rem;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .pricing-features li:last-child { border-bottom: none; }
-    .pricing-features li::before {
-      content: "✓";
-      color: var(--purple);
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .pricing-card .btn { width: 100%; text-align: center; display: block; }
-
-    /* ── WAITLIST ── */
-    #waitlist {
-      background: var(--purple);
-      color: var(--white);
-      text-align: center;
-    }
-    #waitlist h2   { color: var(--white); margin-bottom: 16px; }
-    #waitlist p    { color: rgba(255,255,255,0.8); font-size: 1.0625rem; max-width: 520px; margin: 0 auto 44px; }
-
-    .waitlist-form {
-      display: flex;
-      max-width: 480px;
-      margin: 0 auto;
-      gap: 12px;
-    }
-    .waitlist-form input[type="email"] {
-      flex: 1;
-      padding: 0.9rem 1.25rem;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
-      outline: none;
-      color: var(--text);
-    }
-    .waitlist-form input[type="email"]::placeholder { color: var(--text-muted); }
-
-    .thank-you {
-      display: none;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 12px;
-      padding: 22px 32px;
-      max-width: 480px;
-      margin: 0 auto;
-      font-size: 1.0625rem;
-      font-weight: 500;
-    }
-
-    /* ── FAQ ── */
-    .faq { background: var(--white); }
-    .faq h2 { text-align: center; margin-bottom: 52px; }
-
-    .faq-list { max-width: 720px; margin: 0 auto; }
-
-    .faq-item { border-bottom: 1px solid var(--border); }
-
-    .faq-question {
-      width: 100%;
-      background: none;
-      border: none;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 22px 0;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      gap: 16px;
-      transition: color 0.15s;
-    }
-    .faq-question:hover { color: var(--purple); }
-
-    .faq-icon {
-      flex-shrink: 0;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.125rem;
-      line-height: 1;
-      transition: transform 0.2s, border-color 0.2s, color 0.2s;
-    }
-    .faq-item.open .faq-icon {
-      transform: rotate(45deg);
-      border-color: var(--purple);
-      color: var(--purple);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.2s;
-      font-size: 0.9375rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-      padding: 0;
-    }
-    .faq-item.open .faq-answer {
-      max-height: 300px;
-      padding-bottom: 22px;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: #111827;
-      color: rgba(255,255,255,0.55);
-      padding: 36px 5%;
-    }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.875rem;
-    }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a { color: rgba(255,255,255,0.55); text-decoration: none; }
-    .footer-links a:hover { color: var(--white); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 860px) {
-      .steps            { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-      .feature-cards    { grid-template-columns: 1fr; }
-      .pricing-cards    { flex-direction: column; align-items: center; }
-    }
-    @media (max-width: 540px) {
-      section           { padding: 64px 6%; }
-      .hero             { padding-top: 72px; padding-bottom: 72px; }
-      .waitlist-form    { flex-direction: column; }
-      .pricing-card     { width: 100%; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles-bold.css?v=4" />
 </head>
-<body>
+<body data-accent-word="customers">
 
-  <!-- ── NAV ── -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/" class="logo">Pocketnori</a>
-      <a href="#waitlist" class="btn btn-primary">Join Waitlist</a>
-    </div>
-  </nav>
+  <!-- ════════ HERO ════════ -->
+  <div class="hero-pad">
+    <header class="hero" data-screen-label="Hero">
+      <video class="hero-video" autoplay loop muted playsinline preload="auto" disableremoteplayback webkit-playsinline="true" x5-playsinline="true"
+        poster="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=60">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260424_064411_9e9d7f84-9277-41f4-ab10-59172d89e6be.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-scrim"></div>
 
-  <!-- ── HERO ── -->
-  <section class="hero">
+      <!-- Nav -->
+      <div class="nav-zone">
+        <nav class="nav">
+          <a href="#top" class="brandmark" aria-label="Pocketnori home">
+            <svg width="26" height="29" viewBox="0 0 221 245" fill="none" aria-hidden="true">
+              <rect x="90.0098" y="6.68465" width="133.364" height="177.819" rx="42" transform="rotate(11.2302 90.0098 6.68465)" fill="#3A4B3A"></rect>
+              <rect y="36.8293" width="160" height="213.333" rx="60" transform="rotate(-13.3079 0 36.8293)" fill="#6B78AE"></rect>
+              <line x1="89.3032" y1="55.519" x2="117.303" y2="189.519" stroke="white" stroke-width="1.5"></line>
+            </svg>
+            <span class="name">Pocketnori</span>
+          </a>
+          <div class="nav-links">
+            <a href="#how">How it works</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div class="nav-right">
+            <a href="#waitlist" class="btn btn-dark btn-sm nav-cta">
+              Join Waitlist
+              <span class="chev"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></span>
+            </a>
+            <button class="hamb" id="hambBtn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+          </div>
+          <div class="mobile-menu" id="mobileMenu">
+            <a href="#how">How it works</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+            <a href="#waitlist">Join Waitlist</a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Hero content -->
+      <div class="hero-inner" id="top" style="font-weight: 700">
+        <h1 style="color:#000;">Turn Instagram Comments Into <span class="accent-customers" style="color: rgb(255, 255, 255)">Customers</span>. <span class="accent-automatically" style="color: rgb(255, 255, 255)">Automatically</span>.</h1>
+        <p class="sub" style="color:#000;">Pocketnori automates your Instagram DMs, comment replies, and lead capture so you can focus on creating.</p>
+        <a href="#waitlist" class="btn btn-dark hero-cta">
+          Join Waitlist
+          <span class="chev"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></span>
+        </a>
+
+        <!-- Dashboard preview -->
+        <div class="dash" aria-hidden="true">
+          <div class="dash-grid">
+
+            <!-- Card 1 — DMs Sent -->
+            <div class="dcard">
+              <div class="dcard-head"><span class="k">DMs Sent</span><span class="when">This Month</span></div>
+              <div class="bignum"><b>6,896</b><span class="trend up"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l5-5 3 3 5-6"/><path d="M13 3h3v3"/></svg>+3,382 (33%)</span></div>
+              <div class="cap">Compared to last month</div>
+              <div class="gauge-wrap">
+                <div class="gtitle">Monthly target reached</div>
+                <svg class="gauge" viewBox="0 0 200 120" data-value="92" data-color="#6D28D9"></svg>
+                <div class="gauge-labels"><span>389K</span><span>425K</span></div>
+              </div>
+              <div class="seg"><button class="on">DMs</button><button>Comments</button></div>
+            </div>
+
+            <!-- Card 2 — Automation setup -->
+            <div class="dcard">
+              <div class="dcard-head"><span class="k">Automation</span><span class="when">Comment to DM</span></div>
+              <div class="fgroup" style="margin-top:16px;">
+                <label>Trigger on</label>
+                <div class="fselect">New comment <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#9CA3AF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></div>
+              </div>
+              <div class="fgroup">
+                <label>Reply with</label>
+                <div class="fselect">Saved DM template <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#9CA3AF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></div>
+              </div>
+              <div class="fgroup">
+                <label>Keywords tracked</label>
+                <div class="finput"><span class="pre">#</span><span>3</span></div>
+              </div>
+              <div class="fcard-foot">
+                <button class="btn btn-brand btn-sm">Save</button>
+                <span class="cancel">Cancel</span>
+                <span class="x"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></span>
+              </div>
+            </div>
+
+            <!-- Card 3 — Comments Replied -->
+            <div class="dcard">
+              <div class="dcard-head"><span class="k">Comments Replied</span><span class="when">today</span></div>
+              <div class="bignum"><b>248</b><span class="trend up"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l5-5 3 3 5-6"/><path d="M13 3h3v3"/></svg>+12%</span></div>
+              <div class="cap">Compared to yesterday</div>
+              <div class="gauge-wrap">
+                <div class="gtitle">Auto-reply coverage</div>
+                <svg class="gauge" viewBox="0 0 200 120" data-value="68" data-color="#9CA3AF"></svg>
+              </div>
+              <div class="seg"><button class="on">Replies</button><button>Mentions</button></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- ════════ HOW IT WORKS ════════ -->
+  <section id="how" class="section-light" data-screen-label="How it works">
     <div class="container">
-      <h1>Turn Instagram Comments Into Customers. Automatically.</h1>
-      <p>Pocketnori automates your Instagram DMs, comment replies, and lead capture so you can focus on creating.</p>
-      <a href="#waitlist" class="btn btn-primary btn-lg">Join Waitlist</a>
-    </div>
-  </section>
-
-  <!-- ── HOW IT WORKS ── -->
-  <section class="how-it-works">
-    <div class="container">
-      <h2>Set up in 3 steps</h2>
+      <div class="section-head">
+        <span class="kicker">How it works</span>
+        <h2>Set up in 3 steps</h2>
+      </div>
       <div class="steps">
         <div class="step">
-          <div class="step-number">1</div>
+          <div class="snum">1</div>
           <h3>Connect your Instagram account</h3>
           <p>Link your Instagram Business or Creator account securely via Instagram's official API. No passwords shared.</p>
         </div>
         <div class="step">
-          <div class="step-number">2</div>
+          <div class="snum">2</div>
           <h3>Choose an automation template</h3>
           <p>Pick from ready-made templates for comment-to-DM, auto-replies, post logging, and more.</p>
         </div>
         <div class="step">
-          <div class="step-number">3</div>
+          <div class="snum">3</div>
           <h3>Watch it run on autopilot</h3>
           <p>Pocketnori handles every trigger in real time. You focus on creating content — we handle the rest.</p>
         </div>
@@ -400,23 +145,26 @@
     </div>
   </section>
 
-  <!-- ── FEATURES ── -->
-  <section class="features">
+  <!-- ════════ FEATURES ════════ -->
+  <section id="features" class="section-grey" data-screen-label="Features">
     <div class="container">
-      <h2>Everything you need to grow on Instagram</h2>
+      <div class="section-head">
+        <span class="kicker">Features</span>
+        <h2>Everything you need to grow on Instagram</h2>
+      </div>
       <div class="feature-cards">
-        <div class="card">
-          <div class="card-icon">💬</div>
+        <div class="fcard2">
+          <div class="ficon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 1 1 16.1-3.8z"/></svg></div>
           <h3>Comment to DM</h3>
           <p>Someone comments a keyword on your post. They get your link instantly via DM. Zero manual work.</p>
         </div>
-        <div class="card">
-          <div class="card-icon">⚡</div>
+        <div class="fcard2">
+          <div class="ficon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
           <h3>Auto-reply to Comments</h3>
           <p>Never leave a comment unanswered. Set a reply and Pocketnori handles the rest.</p>
         </div>
-        <div class="card">
-          <div class="card-icon">📊</div>
+        <div class="fcard2">
+          <div class="ficon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 9v12"/></svg></div>
           <h3>Post to Google Sheets</h3>
           <p>Every new Instagram post logged automatically. Track performance without lifting a finger.</p>
         </div>
@@ -424,126 +172,78 @@
     </div>
   </section>
 
-  <!-- ── PRICING ── -->
-  <section class="pricing">
+  <!-- ════════ PRICING ════════ -->
+  <section id="pricing" class="section-light" data-screen-label="Pricing">
     <div class="container">
-      <h2>Simple pricing. No surprises.</h2>
-      <p class="pricing-sub">One price. All features. Cancel anytime.</p>
+      <div class="section-head">
+        <span class="kicker">Pricing</span>
+        <h2>Simple pricing. No surprises.</h2>
+        <p>Start with a <strong>free 1-week trial</strong>. One price. All features. Cancel anytime.</p>
+      </div>
       <div class="pricing-cards">
-
-        <!-- Monthly -->
-        <div class="pricing-card">
-          <div class="plan-name">Monthly</div>
+        <div class="pcard">
+          <div class="plan">Monthly</div>
           <div class="price">₹99 <span>/ month</span></div>
-          <ul class="pricing-features">
-            <li>All automation templates</li>
-            <li>Unlimited automations</li>
-            <li>Real-time execution logs</li>
-            <li>Connect 1 Instagram account</li>
-            <li>Email support</li>
-          </ul>
-          <a href="#waitlist" class="btn btn-primary">Join Waitlist</a>
+          <ul class="plist" data-plist></ul>
+          <a href="#waitlist" class="btn btn-ghost">Join Waitlist</a>
         </div>
-
-        <!-- Annual -->
-        <div class="pricing-card featured">
-          <div class="badge">Save 15%</div>
-          <div class="plan-name">Annual</div>
+        <div class="pcard featured">
+          <div class="pbadge">Save 15%</div>
+          <div class="plan">Annual</div>
           <div class="price">₹999 <span>/ year</span></div>
-          <ul class="pricing-features">
-            <li>All automation templates</li>
-            <li>Unlimited automations</li>
-            <li>Real-time execution logs</li>
-            <li>Connect 1 Instagram account</li>
-            <li>Email support</li>
-          </ul>
-          <a href="#waitlist" class="btn btn-primary">Join Waitlist</a>
+          <ul class="plist" data-plist></ul>
+          <a href="#waitlist" class="btn btn-brand">Join Waitlist</a>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── WAITLIST ── -->
-  <section id="waitlist">
+  <!-- ════════ WAITLIST ════════ -->
+  <section id="waitlist" class="waitlist" data-screen-label="Waitlist">
     <div class="container">
-      <h2>Be the first to automate your Instagram</h2>
-      <p>We're onboarding creators in batches. Join the waitlist and get early access at a special price.</p>
-
-      <!--
-        GOOGLE FORMS SETUP:
-        1. Create a Google Form with one short-answer question labelled "Email"
-        2. In the form editor, click the ⋮ menu → Get pre-filled link
-        3. Fill in any email, click "Get link", copy the URL
-        4. From that URL, copy the "entry.XXXXXXXXXX" parameter name
-        5. From the form's share URL, copy the form ID (the long string after /d/e/)
-        6. Replace FORM_ID and ENTRY_ID below
-      -->
+      <div class="section-head">
+        <h2>Be the first to automate your Instagram effectively</h2>
+        <p>We're onboarding creators in batches. Join the waitlist and get early access at a special price.</p>
+      </div>
       <form class="waitlist-form" id="waitlistForm">
         <input type="email" id="emailInput" placeholder="Enter your email address" required />
         <button type="submit" class="btn btn-white">Join Waitlist</button>
       </form>
-
-      <div class="thank-you" id="thankYou">
-        You're on the list! We'll be in touch soon.
-      </div>
+      <div class="thanks" id="thankYou">You're on the list! We'll be in touch soon.</div>
     </div>
   </section>
 
-  <!-- ── FAQ ── -->
-  <section class="faq">
+  <!-- ════════ FAQ ════════ -->
+  <section id="faq" class="section-grey" data-screen-label="FAQ">
     <div class="container">
-      <h2>Common questions</h2>
+      <div class="section-head">
+        <h2>Frequently Asked Questions</h2>
+      </div>
       <div class="faq-list">
-
         <div class="faq-item">
-          <button class="faq-question">
-            Is this safe for my Instagram account?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes. Pocketnori uses Instagram's official API. No password sharing, no bots, no risk of getting banned.
-          </div>
+          <button class="faq-q">Is this safe for my Instagram account?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p style="padding-top:2px;">Yes. Pocketnori uses Instagram's official API. No password sharing, no bots, no risk of getting banned.</p></div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-question">
-            Do I need any technical knowledge?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            None at all. If you can use Instagram, you can use Pocketnori.
-          </div>
+          <button class="faq-q">Do I need any technical knowledge?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p style="padding-top:2px;">None at all. If you can use Instagram, you can use Pocketnori.</p></div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-question">
-            Can I cancel anytime?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes. Cancel with one click, no questions asked.
-          </div>
+          <button class="faq-q">Can I cancel anytime?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p style="padding-top:2px;">Yes. Cancel with one click, no questions asked.</p></div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-question">
-            What kind of Instagram account do I need?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            You need an Instagram Business or Creator account. Personal accounts are not supported by Instagram's API.
-          </div>
+          <button class="faq-q">What kind of Instagram account do I need?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p style="padding-top:2px;">You need an Instagram Business or Creator account. Personal accounts are not supported by Instagram's API.</p></div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── FOOTER ── -->
+  <!-- ════════ FOOTER ════════ -->
   <footer>
     <div class="footer-inner">
-      <span>© 2026 Pocketnori</span>
+      <span class="copy">© 2026 Pocketnori</span>
       <div class="footer-links">
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms of Service</a>
@@ -551,42 +251,14 @@
     </div>
   </footer>
 
-  <script>
-    // FAQ accordion
-    document.querySelectorAll('.faq-question').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = btn.closest('.faq-item');
-        var isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
-        if (!isOpen) item.classList.add('open');
-      });
-    });
+  <script src="app.js?v=3"></script>
 
-    // Waitlist form
-    // To wire up Google Sheets collection:
-    //   Replace FORM_ID with your Google Form ID
-    //   Replace ENTRY_ID with your form field entry ID (e.g. entry.1234567890)
-    var FORM_ID  = 'YOUR_GOOGLE_FORM_ID';
-    var ENTRY_ID = 'entry.YOUR_ENTRY_ID';
-
-    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var email = document.getElementById('emailInput').value.trim();
-
-      // Submit to Google Forms silently (no-cors, fires and forgets)
-      if (FORM_ID !== 'YOUR_GOOGLE_FORM_ID') {
-        var body = new FormData();
-        body.append(ENTRY_ID, email);
-        fetch(
-          'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse',
-          { method: 'POST', mode: 'no-cors', body: body }
-        ).catch(function() {});
-      }
-
-      document.getElementById('waitlistForm').style.display = 'none';
-      document.getElementById('thankYou').style.display = 'block';
-    });
-  </script>
+  <!-- Tweaks -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="tweaks.jsx"></script>
 
 </body>
 </html>
